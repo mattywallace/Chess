@@ -52,12 +52,20 @@ const app = {
 
 	createBoard: () => {
 		const arena = document.getElementById('game_arena')
-		console.log(arena);
-		app.board.forEach(() => {
+		for ( i = 1 ; i <= app.board.length; i ++){
 			let board = document.createElement('div')
-			board.innerText = 'space'
+			board.innerText = `space ${i}`
+			if ( i % 2 === 0){
+				board.classList.add(`white`)
+			} else {
+				board.classList.add(`black`)
+			}
+			board.classList.add(`${i}`)
+
 			arena.appendChild(board)
-		})
+			console.log(board);
+		}
+		
 	}
 		
 }
