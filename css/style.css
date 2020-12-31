@@ -1,18 +1,23 @@
 body {
 	background-color: lightblue;
+	display: inline-block;
+	align-items: center;
 }
 #game_arena {
-	height:240px;
-	width:240px;
+	height:560px;
+	width:560px;
 	background-color: pink;
 	display: flex;
 	flex-flow:row wrap;
 	border-style: solid;
   	border-width: 5px;
+  	margin:0px auto;
+	left:0;
+	right:0;
 }
 .space{
-	height:30px;
-	width:30px;
+	height:70px;
+	width:70px;
 	background-color:orange;
 }
 

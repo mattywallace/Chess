@@ -40,39 +40,28 @@ const app = {
 
 	},
 
-	createBoardSpaces: (numberOfSpaces) => {
+	createBoard: (numberOfSpaces) => {
+		const arena = document.getElementById('game_arena')
 		for (n = 1; n <= Math.sqrt(numberOfSpaces); n ++){
 				for (s = 1; s <= Math.sqrt(numberOfSpaces); s++ ) {
 					const space = new Space(n,s)
 					app.board.push(space)
-				}
-		}
-		console.log(app.board);
-	},
-
-	createBoard: (numberOfSpaces) => {
-		const arena = document.getElementById('game_arena')
-		for ( i = 1 ; i <= Math.sqrt(numberOfSpaces); i++){
-			for ( n = 1 ; n <= Math.sqrt(numberOfSpaces); n++) {
-					let board = document.createElement('div')
-					board.classList.add('space')
-					if( (i + n) % 2 === 0 ){
-						board.classList.add('white')
+					let square = document.createElement('div')
+					square.dataset.rank_and_file = `${n},${s}` 
+					square.classList.add('space')
+					if( (n + s) % 2 === 0 ){
+						square.classList.add('white')
 					} else {
-						board.classList.add('black')
+						square.classList.add('black')
 					}
-					arena.appendChild(board)
-					console.log(board);
+					arena.appendChild(square)
+					console.log(square);
 				}
-
 		}
 	},
 
-	colorSquares: () => {
-		document.querySelectorAll()
-	}
 }
-		
+
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -84,5 +73,9 @@ const app = {
 
 
 app.createPawns(12)
-app.createBoardSpaces(64)
 app.createBoard(64)
+document.addEventListener('click', (event) => {
+       console.log(event.target);;
+    })
+
+	
