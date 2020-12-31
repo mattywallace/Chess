@@ -27,12 +27,13 @@ class Pawn {
 
 const app = {
 	board: [],
-	pawns: [],
+	whitePawns: [],
+	blackPawns: [],
 
 	createBoard: (numberOfSpaces) => {
 		const arena = document.getElementById('game_arena')
-		for (n = 1; n <= Math.sqrt(numberOfSpaces); n ++){
-				for (s = 1; s <= Math.sqrt(numberOfSpaces); s++ ) {
+		for (n = 0; n < Math.sqrt(numberOfSpaces); n ++){
+				for (s = 0; s < Math.sqrt(numberOfSpaces); s++ ) {
 					const space = new Space(n,s)
 					app.board.push(space)
 					let square = document.createElement('div')
@@ -51,30 +52,45 @@ const app = {
 	
 
 	createWhitePawns: (numberOfPawns) => {  
-		for (i = 1; i <= numberOfPawns; i ++){
-		 	let whitePawn = new Pawn(`white`, 7, i )
-		 	app.pawns.push(whitePawn);
-		}
+		let whiteFile = document.querySelectorAll(`[data-rank='${app.board[53].rank}']`)
+		console.log(whiteFile);
+		for (i = 0; i < numberOfPawns; i ++){
+		 	let whitePawn = new Pawn(`white`, 6, i )
+		 	app.whitePawns.push(whitePawn);
+		 	let wPawn = document.createElement('div')
+		 	wPawn.classList.add('white_pawn')
+		 	for (n = 0; n < whiteFile.length; n++){
+		 		if ( n === i ) {
+		 			whiteFile[n].appendChild(wPawn)
+		 			wPawn.dataset.file = `${i}`
+		 			wPawn.dataset.rank = `${app.board[53].rank}`
+		 		}
+		 	}
 
+		 }
 	},
 
+	
+
 	createBlackPawns: (numberOfPawns) => {
-		let blackFile = document.querySelectorAll(`[data-rank='${app.board[9].rank}']`)
+		let blackFile = document.querySelectorAll(`[data-rank='${app.board[13].rank}']`)
+		console.log(blackFile);
 		for (i = 0; i < numberOfPawns; i ++){
-		 	let blackPawn = new Pawn(`black`, 2, i )
-		 	app.pawns.push(blackPawn);
+		 	let blackPawn = new Pawn(`black`, 1, i )
+		 	app.blackPawns.push(blackPawn);
 		 	let bPawn = document.createElement('div')
-		 	bPawn.classList.add('black_pawn')
+		 	bPawn.classList.add('black_pawn') 
 		 	for (n = 0; n < blackFile.length; n++){
 		 		if (n === i) {
 		 			console.log(n , i);
+		 			bPawn.dataset.file = `${i}`
+		 			bPawn.dataset.rank = `${app.board[13].rank}`
 		 			console.log(blackFile[n]);
 		 			blackFile[n].appendChild(bPawn)
 		 		}
 		 	}
 
 		}
-		console.log(blackFile[0]);
 	},
 
 }

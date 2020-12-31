@@ -21,6 +21,11 @@ body {
 	width: 30px;
 	background-color: red;
 }
+.white_pawn {
+	height: 30px;
+	width: 30px;
+	background-color: green;
+}
 
 .space{
 	height:70px;
