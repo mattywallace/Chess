@@ -26,19 +26,8 @@ class Pawn {
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 const app = {
-	whitePawns : [],
-	blackPawns: [],
 	board: [],
-
-	createPawns: (numberOfPawns) => {  
-		for (i = 0; i < numberOfPawns; i ++){
-			const whitePawn = new Pawn(`white`, 2, i + 1)
-			const blackPawn = new Pawn(`black`, 7, i + 1)
-			app.whitePawns.push(whitePawn)
-			app.blackPawns.push(blackPawn)
-		}
-
-	},
+	pawns: [],
 
 	createBoard: (numberOfSpaces) => {
 		const arena = document.getElementById('game_arena')
@@ -47,7 +36,8 @@ const app = {
 					const space = new Space(n,s)
 					app.board.push(space)
 					let square = document.createElement('div')
-					square.dataset.rank_and_file = `${n},${s}` 
+					square.dataset.file = `${s}`
+					square.dataset.rank = `${n}` 
 					square.classList.add('space')
 					if( (n + s) % 2 === 0 ){
 						square.classList.add('white')
@@ -55,12 +45,41 @@ const app = {
 						square.classList.add('black')
 					}
 					arena.appendChild(square)
-					console.log(square);
-				}
+			}
 		}
+	},
+	
+
+	createWhitePawns: (numberOfPawns) => {  
+		for (i = 1; i <= numberOfPawns; i ++){
+		 	let whitePawn = new Pawn(`white`, 7, i )
+		 	app.pawns.push(whitePawn);
+		}
+
+	},
+
+	createBlackPawns: (numberOfPawns) => {
+		let blackFile = document.querySelectorAll(`[data-rank='${app.board[9].rank}']`)
+		for (i = 0; i < numberOfPawns; i ++){
+		 	let blackPawn = new Pawn(`black`, 2, i )
+		 	app.pawns.push(blackPawn);
+		 	let bPawn = document.createElement('div')
+		 	bPawn.classList.add('black_pawn')
+		 	for (n = 0; n < blackFile.length; n++){
+		 		if (n === i) {
+		 			console.log(n , i);
+		 			console.log(blackFile[n]);
+		 			blackFile[n].appendChild(bPawn)
+		 		}
+		 	}
+
+		}
+		console.log(blackFile[0]);
 	},
 
 }
+
+
 
 
 
@@ -72,8 +91,10 @@ const app = {
 
 
 
-app.createPawns(12)
 app.createBoard(64)
+app.createWhitePawns(8)
+app.createBlackPawns(8)
+
 document.addEventListener('click', (event) => {
        console.log(event.target);;
     })

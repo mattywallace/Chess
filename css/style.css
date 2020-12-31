@@ -15,6 +15,13 @@ body {
 	left:0;
 	right:0;
 }
+
+.black_pawn{
+	height: 30px;
+	width: 30px;
+	background-color: red;
+}
+
 .space{
 	height:70px;
 	width:70px;
