@@ -50,25 +50,30 @@ const app = {
 		console.log(app.board);
 	},
 
-	createBoard: () => {
+	createBoard: (numberOfSpaces) => {
 		const arena = document.getElementById('game_arena')
-		for ( i = 1 ; i <= app.board.length; i ++){
-			let board = document.createElement('div')
-			board.innerText = `space ${i}`
-			if ( i % 2 === 0){
-				board.classList.add(`white`)
-			} else {
-				board.classList.add(`black`)
-			}
-			board.classList.add(`${i}`)
+		for ( i = 1 ; i <= Math.sqrt(numberOfSpaces); i++){
+			for ( n = 1 ; n <= Math.sqrt(numberOfSpaces); n++) {
+					let board = document.createElement('div')
+					board.classList.add('space')
+					if( (i + n) % 2 === 0 ){
+						board.classList.add('white')
+					} else {
+						board.classList.add('black')
+					}
+					arena.appendChild(board)
+					console.log(board);
+				}
 
-			arena.appendChild(board)
-			console.log(board);
 		}
-		
+	},
+
+	colorSquares: () => {
+		document.querySelectorAll()
 	}
-		
 }
+		
+
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -80,4 +85,4 @@ const app = {
 
 app.createPawns(12)
 app.createBoardSpaces(64)
-app.createBoard()
+app.createBoard(64)
