@@ -3,8 +3,8 @@ console.log('hello world');
 
 class Space {
 	constructor (rank, file) {
-		this.rank = rank
 		this.file = file 
+		this.rank = rank
 	}
 }
 
@@ -84,8 +84,15 @@ const app = {
 		}
 	},
 
-	selectWhitePawn: (rank, file) => {
-		console.log(rank,file);
+	selectWhitePawn: (file, rank) => {
+		console.log(file,rank);
+
+		let availableSquare = document.querySelector(`[data-file='${file}'][data-rank='${rank-1}']`)
+		console.log(availableSquare);
+		// let spaces = document.querySelectorAll('.space')
+		// spaces.forEach((space)=>{
+		// 	console.log(space.dataset);			
+		// })
 	}
 }
 
@@ -111,7 +118,7 @@ board.addEventListener('click', (event) => {
        console.log(event.target.dataset);
        if (event.target.classList.value === 'white_pawn'){
        		console.log(`here is the white_pawn`)
-       		app.selectWhitePawn(event.target.dataset.rank, event.target.dataset.file)
+       		app.selectWhitePawn(event.target.dataset.file, event.target.dataset.rank)
        } else if (event.target.classList.value === 'black_pawn'){
        	console.log('here is the black_pawn');
        } else if (event.target.classList[0] === 'space'){
