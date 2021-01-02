@@ -29,6 +29,7 @@ const app = {
 	board: [],
 	whitePawns: [],
 	blackPawns: [],
+	capturedPawsn: [],
 
 	createBoard: (numberOfSpaces) => {
 		const arena = document.getElementById('game_arena')
@@ -85,14 +86,14 @@ const app = {
 	},
 
 	selectWhitePawn: (file, rank) => {
-		console.log(file,rank);
-
-		let availableSquare = document.querySelector(`[data-file='${file}'][data-rank='${rank-1}']`)
-		console.log(availableSquare);
-		// let spaces = document.querySelectorAll('.space')
-		// spaces.forEach((space)=>{
-		// 	console.log(space.dataset);			
-		// })
+		console.log(file,rank)
+		if ( rank === '6'){ 
+			for ( i = 0; i < 2; i ++) {
+				let firstMoveSpaces = document.querySelector(`[data-file='${file}'][data-rank='${rank-(i+1)}']`)
+				firstMoveSpaces.classList.add('available_space')
+				console.log(firstMoveSpaces);
+			}
+		}
 	}
 }
 

@@ -40,9 +40,7 @@ body {
 .space.black{
 	background-color:darkgrey;
 }
-.space.green{
-	background-color:green;
-}
-.space.first_file{
-	background-color: green;
+.space.available_space {
+	opacity: 60%;
+
 }
