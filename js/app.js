@@ -84,14 +84,9 @@ const app = {
 		}
 	},
 
-	// selectWhitePawn: (rank, file) => {
-	// 	if ( rank === 1 ) {
-	// 		let availableMoves = document.dataset.contains('file-')
-	// 	}
-
-	// }
-
-	// }
+	selectWhitePawn: (rank, file) => {
+		console.log(rank,file);
+	}
 }
 
 
@@ -110,17 +105,22 @@ app.createBoard(64)
 app.createWhitePawns(8)
 app.createBlackPawns(8)
 
-document.addEventListener('click', (event) => {
-       console.log(event.target.classList);
-       event.target.classList.forEach(() => {
-       	if (event.target.classList.value === 'white_pawn'){
-       		console.log(`here is the white_pawn`);
+
+let board = document.getElementById('game_arena')
+board.addEventListener('click', (event) => {
+       console.log(event.target.dataset);
+       if (event.target.classList.value === 'white_pawn'){
+       		console.log(`here is the white_pawn`)
+       		app.selectWhitePawn(event.target.dataset.rank, event.target.dataset.file)
        } else if (event.target.classList.value === 'black_pawn'){
-       	console.log('black_pawn');
-       } else {
+       	console.log('here is the black_pawn');
+       } else if (event.target.classList[0] === 'space'){
        	console.log('clicked a space');
+       } else if (event.target.classList[0] === 'space'){
+       	console.log('clicked a space')
+       } else {
+       	console.log('clicked');
        }
-    })
 })
 
 	
