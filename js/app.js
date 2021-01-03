@@ -29,7 +29,7 @@ const app = {
 	board: [],
 	whitePawns: [],
 	blackPawns: [],
-	capturedPawsn: [],
+	capturedPawns: [],
 
 	createBoard: (numberOfSpaces) => {
 		const arena = document.getElementById('game_arena')
@@ -87,6 +87,17 @@ const app = {
 
 	selectWhitePawn: (file, rank) => {
 		console.log(file,rank)
+		console.log(app.whitePawns);
+		for (x = 0; x < app.whitePawns.length; x++){
+			console.log(typeof(app.whitePawns[x].rank));
+			console.log(typeof(rank));
+			if (app.whitePawns[x].rank == rank && app.whitePawns[x].file == file) {
+				console.log('found matching pawn' , app.whitePawns[x].rank , app.whitePawns[x].file );
+				let selectedPiece = document.querySelector(`[data-file='${app.whitePawns[x].file}'][data-rank='${app.whitePawns[x].rank}'] .white_pawn`)
+				console.log(selectedPiece);
+				selectedPiece.classList.add('selected_piece')
+			}
+		}
 		if ( rank === '6'){ 
 			for ( i = 0; i < 2; i ++) {
 				let firstMoveSpaces = document.querySelector(`[data-file='${file}'][data-rank='${rank-(i+1)}']`)
