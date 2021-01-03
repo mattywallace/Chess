@@ -112,14 +112,20 @@ const app = {
 	},
 
 	highlightWhiteMoves: (selectedPiece) => {
+		console.log('here is the selectedPiece', selectedPiece.dataset)
 		for ( x = 0; x < app.board.length; x++){
 			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
 				if ( app.board[x].rank === 6 ){ 
 					for ( i = 0; i < 2; i ++) {
 						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - (i+1)}']`)
 						if (firstMoveSpaces.childNodes.length === 1){
-							console.log('there is a black pawn present',firstMoveSpaces)
-						}
+							console.log('there is a pawn present',firstMoveSpaces.childNodes[0].dataset.rank)
+							if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - 2){
+								console.log('the pawn is two spaces ahead of you')
+							} else if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - 1) {
+								console.log('there is a pawn 1 space above you')
+							}
+						}	
 						if (firstMoveSpaces.classList.length === 3 ){
 							firstMoveSpaces.classList.remove('available_space')
 						} else {
