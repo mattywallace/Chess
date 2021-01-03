@@ -86,26 +86,45 @@ const app = {
 	},
 
 	selectWhitePawn: (file, rank) => {
-		console.log(file,rank)
-		console.log(app.whitePawns);
 		for (x = 0; x < app.whitePawns.length; x++){
-			console.log(typeof(app.whitePawns[x].rank));
-			console.log(typeof(rank));
 			if (app.whitePawns[x].rank == rank && app.whitePawns[x].file == file) {
-				console.log('found matching pawn' , app.whitePawns[x].rank , app.whitePawns[x].file );
 				let selectedPiece = document.querySelector(`[data-file='${app.whitePawns[x].file}'][data-rank='${app.whitePawns[x].rank}'] .white_pawn`)
-				console.log(selectedPiece);
-				selectedPiece.classList.add('selected_piece')
+				console.log(selectedPiece.classList);
+				if (selectedPiece.classList.length === 2) {
+					console.log('this does have the class');
+					selectedPiece.classList.remove('selected_piece')
+					app.highlightMoves(selectedPiece)			
+				} else {
+					selectedPiece.classList.add('selected_piece')
+					app.highlightMoves(selectedPiece)
+					console.log('added the class');
+				}
 			}
 		}
-		if ( rank === '6'){ 
-			for ( i = 0; i < 2; i ++) {
-				let firstMoveSpaces = document.querySelector(`[data-file='${file}'][data-rank='${rank-(i+1)}']`)
-				firstMoveSpaces.classList.add('available_space')
-				console.log(firstMoveSpaces);
+	},
+
+	highlightMoves: (selectedPiece) => {
+		console.log(`here is the passed down peice`, selectedPiece);
+		for ( x = 0; x < app.board.length; x++){
+			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
+				console.log('if statement working correctly',app.board[x].rank , app.board[x].file);
+				if ( app.board[x].rank === 6){ 
+					for ( i = 0; i < 2; i ++) {
+						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - (i+1)}']`)
+						console.log(firstMoveSpaces.classList.length);
+						if (firstMoveSpaces.classList.length === 3 ){
+							firstMoveSpaces.classList.remove('available_space')
+						} else {
+							firstMoveSpaces.classList.add('available_space')
+							console.log(firstMoveSpaces.classList);
+						}
+					}
+				} else {
+					return
+				}
 			}
 		}
-	}
+	},
 }
 
 
@@ -127,8 +146,8 @@ app.createBlackPawns(8)
 
 let board = document.getElementById('game_arena')
 board.addEventListener('click', (event) => {
-       console.log(event.target.dataset);
-       if (event.target.classList.value === 'white_pawn'){
+       console.log(event.target);
+       if (event.target.classList.contains('white_pawn')){
        		console.log(`here is the white_pawn`)
        		app.selectWhitePawn(event.target.dataset.file, event.target.dataset.rank)
        } else if (event.target.classList.value === 'black_pawn'){
