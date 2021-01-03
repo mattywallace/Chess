@@ -122,16 +122,18 @@ const app = {
 							console.log('there is a pawn present',firstMoveSpaces.childNodes[0].dataset.rank)
 							if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - 2){
 								console.log('the pawn is two spaces ahead of you')
+								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
+								console.log(newAvailableMove)
+								if (newAvailableMove.classList.length === 3 ){
+									newAvailableMove.classList.remove('available_space')
+								} else {
+									newAvailableMove.classList.add('available_space')
+								}
 							} else if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - 1) {
 								console.log('there is a pawn 1 space above you')
 							}
-						}	
-						if (firstMoveSpaces.classList.length === 3 ){
-							firstMoveSpaces.classList.remove('available_space')
-						} else {
-							firstMoveSpaces.classList.add('available_space')
 						}
-					}
+					}	
 				} else {
 					let availableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
 					if (availableMove.classList.length === 3 ){
@@ -158,7 +160,6 @@ const app = {
 					}
 				} else {
 					let availableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + 1}']`)
-					console.log(availableMove)
 					if (availableMove.classList.length === 3 ){
 						availableMove.classList.remove('available_space')
 					} else {
