@@ -30,6 +30,9 @@ body {
 .white_pawn.selected_piece {
 	background-color: black;
 }
+.black_pawn.selected_piece {
+	background-color: black;
+}
 
 .space{
 	height:70px;
