@@ -152,6 +152,54 @@ const app = {
 			}
 		}
 	},
+
+	movePawn: (file, rank) => {
+		console.log('available move being passed into move function', rank , file);
+		let pawn = document.querySelector('.selected_piece')
+		pawn.remove()
+		for (x = 0; x < app.board.length; x++) {
+			if ( app.board[x].rank == rank && app.board[x].file == file){
+				let newPawnSpace = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank}']`)
+				newPawnSpace.appendChild(pawn)
+				pawn.classList.remove('selected_piece')
+				let availableSpaces = document.querySelectorAll('.available_space')
+				availableSpaces.forEach((space)=> {
+					space.classList.remove('available_space')
+				})
+			}
+		}
+		app.transferPawnData(pawn,file,rank)
+	},
+
+	transferPawnData: (pawn, spaceFile, spaceRank ) => {
+		console.log(pawn)
+		console.log(spaceFile, spaceRank)
+		if (pawn.classList.contains('white_pawn')){
+			console.log('white pawn was chosen')
+			console.log(app.whitePawns.length);
+			console.log(pawn.dataset.file)
+			for ( x = 0 ; x < app.whitePawns.length; x++){
+				console.log(app.whitePawns[x].file == pawn.dataset.file)
+				console.log(app.whitePawns[x].rank == pawn.dataset.rank)
+				if (app.whitePawns[x].file == pawn.dataset.file && app.whitePawns[x].rank == pawn.dataset.rank){
+					console.log(`we found the`, app.whitePawns[x])
+					app.whitePawns[x].file = parseInt(spaceFile)
+					app.whitePawns[x].rank = parseInt(spaceRank)
+				}
+			}
+		} else if (pawn.classList.contains('black_pawn')){
+			console.log('black pawn was chosen')
+			for ( x = 0 ; x < app.blackPawns.length; x++){
+				console.log(app.blackPawns[x].file == pawn.dataset.file)
+				console.log(app.blackPawns[x].rank == pawn.dataset.rank)
+				if (app.blackPawns[x].file == pawn.dataset.file && app.blackPawns[x].rank == pawn.dataset.rank){
+					console.log(`we found the`, app.blackPawns[x])
+					app.blackPawns[x].file = parseInt(spaceFile)
+					app.blackPawns[x].rank = parseInt(spaceRank)
+				}
+			}
+		}
+	},
 }
 
 
@@ -172,6 +220,7 @@ app.createWhitePawns(8)
 app.createBlackPawns(8)
 
 
+
 let board = document.getElementById('game_arena')
 board.addEventListener('click', (event) => {
        console.log(event.target);
@@ -181,13 +230,20 @@ board.addEventListener('click', (event) => {
        } else if (event.target.classList.contains('black_pawn')){
        		console.log('here is the black_pawn');
        		app.selectBlackPawn(event.target.dataset.file, event.target.dataset.rank)
-       } else if (event.target.classList[0] === 'space'){
-       	console.log('clicked a space');
+       } else if (event.target.classList.contains('available_space')){
+       		console.log('clicked an available space');
+       		console.log(event.target.dataset);
+       		app.movePawn(event.target.dataset.file, event.target.dataset.rank)
        } else if (event.target.classList[0] === 'space'){
        	console.log('clicked a space')
        } else {
        	console.log('clicked');
        }
 })
+
+
+
+
+
 
 	
