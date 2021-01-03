@@ -89,15 +89,12 @@ const app = {
 		for (x = 0; x < app.whitePawns.length; x++){
 			if (app.whitePawns[x].rank == rank && app.whitePawns[x].file == file) {
 				let selectedPiece = document.querySelector(`[data-file='${app.whitePawns[x].file}'][data-rank='${app.whitePawns[x].rank}'] .white_pawn`)
-				console.log(selectedPiece.classList);
 				if (selectedPiece.classList.length === 2) {
-					console.log('this does have the class');
 					selectedPiece.classList.remove('selected_piece')
 					app.highlightWhiteMoves(selectedPiece)			
 				} else {
 					selectedPiece.classList.add('selected_piece')
 					app.highlightWhiteMoves(selectedPiece)
-					console.log('added the class');
 				}
 			}
 		}

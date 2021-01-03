@@ -47,7 +47,11 @@ body {
 .space.black{
 	background-color:darkgrey;
 }
-.space.available_space {
+.space.available_space{
 	opacity: 60%;
-
 }
+.space.available_space:hover {
+	background-color: blue;
+	opacity: 90%;
+}
+
