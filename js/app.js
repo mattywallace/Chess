@@ -14,10 +14,6 @@ class Pawn {
 		this.rank = rank 
 		this.file = file 
 	}
-	movePawn(newRank, newfile) {
-		this.rank = newRank
-		this.file = newFile
-	}
 }
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -104,7 +100,6 @@ const app = {
 		for (x = 0; x < app.blackPawns.length; x++){
 			if (app.blackPawns[x].rank == rank && app.blackPawns[x].file == file) {
 				let selectedPiece = document.querySelector(`[data-file='${app.blackPawns[x].file}'][data-rank='${app.blackPawns[x].rank}'] .black_pawn`)
-				console.log(selectedPiece.classList);
 				if (selectedPiece.classList.length === 2) {
 					selectedPiece.classList.remove('selected_piece')
 					app.highlightBlackMoves(selectedPiece)			
@@ -118,7 +113,6 @@ const app = {
 	},
 
 	highlightWhiteMoves: (selectedPiece) => {
-		console.log(`here is the passed down peice`, selectedPiece);
 		for ( x = 0; x < app.board.length; x++){
 			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
 				if ( app.board[x].rank === 6 ){ 
@@ -130,6 +124,14 @@ const app = {
 							firstMoveSpaces.classList.add('available_space')
 						}
 					}
+				} else {
+					let availableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
+					console.log(availableMove)
+					if (availableMove.classList.length === 3 ){
+						availableMove.classList.remove('available_space')
+					} else {
+						availableMove.classList.add('available_space')
+					}
 				}
 			}
 		}
@@ -139,7 +141,6 @@ const app = {
 		for ( x = 0; x < app.board.length; x++){
 			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
 				if (app.board[x].rank === 1 ){ 
-					console.log('wow dude');
 					for ( i = 0; i < 2; i ++) {
 						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - (i-2)}']`)
 						if (firstMoveSpaces.classList.length === 3 ){
@@ -147,6 +148,14 @@ const app = {
 						} else {
 							firstMoveSpaces.classList.add('available_space')
 						}
+					}
+				} else {
+					let availableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + 1}']`)
+					console.log(availableMove)
+					if (availableMove.classList.length === 3 ){
+						availableMove.classList.remove('available_space')
+					} else {
+						availableMove.classList.add('available_space')
 					}
 				}
 			}
@@ -175,27 +184,21 @@ const app = {
 		console.log(pawn)
 		console.log(spaceFile, spaceRank)
 		if (pawn.classList.contains('white_pawn')){
-			console.log('white pawn was chosen')
-			console.log(app.whitePawns.length);
-			console.log(pawn.dataset.file)
 			for ( x = 0 ; x < app.whitePawns.length; x++){
-				console.log(app.whitePawns[x].file == pawn.dataset.file)
-				console.log(app.whitePawns[x].rank == pawn.dataset.rank)
 				if (app.whitePawns[x].file == pawn.dataset.file && app.whitePawns[x].rank == pawn.dataset.rank){
-					console.log(`we found the`, app.whitePawns[x])
 					app.whitePawns[x].file = parseInt(spaceFile)
 					app.whitePawns[x].rank = parseInt(spaceRank)
+					pawn.dataset.file = spaceFile
+					pawn.dataset.rank = spaceRank
 				}
 			}
 		} else if (pawn.classList.contains('black_pawn')){
-			console.log('black pawn was chosen')
 			for ( x = 0 ; x < app.blackPawns.length; x++){
-				console.log(app.blackPawns[x].file == pawn.dataset.file)
-				console.log(app.blackPawns[x].rank == pawn.dataset.rank)
 				if (app.blackPawns[x].file == pawn.dataset.file && app.blackPawns[x].rank == pawn.dataset.rank){
-					console.log(`we found the`, app.blackPawns[x])
 					app.blackPawns[x].file = parseInt(spaceFile)
 					app.blackPawns[x].rank = parseInt(spaceRank)
+					pawn.dataset.file = spaceFile
+					pawn.dataset.rank = spaceRank
 				}
 			}
 		}
@@ -223,21 +226,17 @@ app.createBlackPawns(8)
 
 let board = document.getElementById('game_arena')
 board.addEventListener('click', (event) => {
-       console.log(event.target);
        if (event.target.classList.contains('white_pawn')){
-       		console.log(`here is the white_pawn`)
+       		console.log(event.target)
        		app.selectWhitePawn(event.target.dataset.file, event.target.dataset.rank)
        } else if (event.target.classList.contains('black_pawn')){
-       		console.log('here is the black_pawn');
        		app.selectBlackPawn(event.target.dataset.file, event.target.dataset.rank)
        } else if (event.target.classList.contains('available_space')){
-       		console.log('clicked an available space');
-       		console.log(event.target.dataset);
        		app.movePawn(event.target.dataset.file, event.target.dataset.rank)
        } else if (event.target.classList[0] === 'space'){
        	console.log('clicked a space')
        } else {
-       	console.log('clicked');
+       	console.log('clicked')
        }
 })
 
