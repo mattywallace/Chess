@@ -86,8 +86,8 @@ const app = {
 			if (app.whitePawns[x].rank == rank && app.whitePawns[x].file == file) {
 				let selectedPiece = document.querySelector(`[data-file='${app.whitePawns[x].file}'][data-rank='${app.whitePawns[x].rank}'] .white_pawn`)
 				if (selectedPiece.classList.length === 2) {
-					selectedPiece.classList.remove('selected_piece')
-					app.highlightWhiteMoves(selectedPiece)			
+					selectedPiece.classList.remove('selected_piece')			
+					app.highlightWhiteMoves(selectedPiece)
 				} else {
 					selectedPiece.classList.add('selected_piece')
 					app.highlightWhiteMoves(selectedPiece)
@@ -106,7 +106,6 @@ const app = {
 				} else {
 					selectedPiece.classList.add('selected_piece')
 					app.highlightBlackMoves(selectedPiece)
-
 				}
 			}
 		}
@@ -118,6 +117,9 @@ const app = {
 				if ( app.board[x].rank === 6 ){ 
 					for ( i = 0; i < 2; i ++) {
 						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - (i+1)}']`)
+						if (firstMoveSpaces.childNodes.length === 1){
+							console.log('there is a black pawn present',firstMoveSpaces)
+						}
 						if (firstMoveSpaces.classList.length === 3 ){
 							firstMoveSpaces.classList.remove('available_space')
 						} else {
@@ -126,7 +128,6 @@ const app = {
 					}
 				} else {
 					let availableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
-					console.log(availableMove)
 					if (availableMove.classList.length === 3 ){
 						availableMove.classList.remove('available_space')
 					} else {
