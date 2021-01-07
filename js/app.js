@@ -118,25 +118,31 @@ const app = {
 				if ( app.board[x].rank === 6 ){ 
 					for ( i = 0; i < 2; i ++) {
 						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - (i+1)}']`)
+						console.log(firstMoveSpaces.childNodes.length)
 						if (firstMoveSpaces.childNodes.length === 1){
-							console.log('there is a pawn present',firstMoveSpaces.childNodes[0].dataset.rank)
+							console.log(selectedPiece.dataset.rank - 2)
 							if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - 2){
-								console.log('the pawn is two spaces ahead of you')
 								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
-								console.log(newAvailableMove)
-								if (newAvailableMove.classList.length === 3 ){
+								if (newAvailableMove.classList.length < 3 ){
 									newAvailableMove.classList.remove('available_space')
 								} else {
 									newAvailableMove.classList.add('available_space')
 								}
 							} else if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - 1) {
-								console.log('there is a pawn 1 space above you')
+								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
+								return 
 							}
+						} else if (firstMoveSpaces.childNodes.length === 0 && firstMoveSpaces.classList.length === 3){
+							firstMoveSpaces.classList.remove('available_space')		
+						} else {
+							firstMoveSpaces.classList.add('available_space')
 						}
 					}	
 				} else {
 					let availableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
-					if (availableMove.classList.length === 3 ){
+					if (availableMove.childNodes.length === 1){
+						return
+					} else if (availableMove.classList.length === 3 ){
 						availableMove.classList.remove('available_space')
 					} else {
 						availableMove.classList.add('available_space')
@@ -147,20 +153,39 @@ const app = {
 	},
 
 	highlightBlackMoves: (selectedPiece) => {
+		console.log('here is the selectedPiece', selectedPiece.dataset)
 		for ( x = 0; x < app.board.length; x++){
 			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
 				if (app.board[x].rank === 1 ){ 
 					for ( i = 0; i < 2; i ++) {
-						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - (i-2)}']`)
-						if (firstMoveSpaces.classList.length === 3 ){
-							firstMoveSpaces.classList.remove('available_space')
+						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + (i+1)}']`)
+						console.log(firstMoveSpaces.childNodes.length)
+						if (firstMoveSpaces.childNodes.length === 1){
+							console.log(firstMoveSpaces.childNodes[0].dataset.rank)
+							if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - (-2) ){
+								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + 1 }']`)
+								console.log('here is the available move if white is in rank 2 ', newAvailableMove)
+								if (newAvailableMove.classList.length < 3 ){
+									newAvailableMove.classList.remove('available_space')
+								} else {
+									newAvailableMove.classList.add('available_space')
+								}
+							} else if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - (-1) ) {
+								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + 1}']`)
+								console.log(newAvailableMove,' here is the available move when white is on rank 2')
+								return 
+							}
+						} else if (firstMoveSpaces.childNodes.length === 0 && firstMoveSpaces.classList.length === 3){
+							firstMoveSpaces.classList.remove('available_space')		
 						} else {
 							firstMoveSpaces.classList.add('available_space')
 						}
-					}
+					}	
 				} else {
 					let availableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + 1}']`)
-					if (availableMove.classList.length === 3 ){
+					if (availableMove.childNodes.length === 1){
+						return
+					} else if (availableMove.classList.length === 3 ){
 						availableMove.classList.remove('available_space')
 					} else {
 						availableMove.classList.add('available_space')
