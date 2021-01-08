@@ -26,6 +26,7 @@ const app = {
 	whitePawns: [],
 	blackPawns: [],
 	capturedPawns: [],
+	whiteTurn: true,
 
 	createBoard: (numberOfSpaces) => {
 		const arena = document.getElementById('game_arena')
@@ -118,9 +119,7 @@ const app = {
 				if ( app.board[x].rank === 6 ){ 
 					for ( i = 0; i < 2; i ++) {
 						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - (i+1)}']`)
-						console.log(firstMoveSpaces.childNodes.length)
 						if (firstMoveSpaces.childNodes.length === 1){
-							console.log(selectedPiece.dataset.rank - 2)
 							if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - 2){
 								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank - 1}']`)
 								if (newAvailableMove.classList.length < 3 ){
@@ -159,12 +158,9 @@ const app = {
 				if (app.board[x].rank === 1 ){ 
 					for ( i = 0; i < 2; i ++) {
 						let firstMoveSpaces = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + (i+1)}']`)
-						console.log(firstMoveSpaces.childNodes.length)
 						if (firstMoveSpaces.childNodes.length === 1){
-							console.log(firstMoveSpaces.childNodes[0].dataset.rank)
 							if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - (-2) ){
 								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + 1 }']`)
-								console.log('here is the available move if white is in rank 2 ', newAvailableMove)
 								if (newAvailableMove.classList.length < 3 ){
 									newAvailableMove.classList.remove('available_space')
 								} else {
@@ -172,7 +168,6 @@ const app = {
 								}
 							} else if (firstMoveSpaces.childNodes[0].dataset.rank == selectedPiece.dataset.rank - (-1) ) {
 								let newAvailableMove = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank + 1}']`)
-								console.log(newAvailableMove,' here is the available move when white is on rank 2')
 								return 
 							}
 						} else if (firstMoveSpaces.childNodes.length === 0 && firstMoveSpaces.classList.length === 3){
@@ -223,6 +218,7 @@ const app = {
 					app.whitePawns[x].rank = parseInt(spaceRank)
 					pawn.dataset.file = spaceFile
 					pawn.dataset.rank = spaceRank
+					app.whiteTurn = false
 				}
 			}
 		} else if (pawn.classList.contains('black_pawn')){
@@ -232,6 +228,7 @@ const app = {
 					app.blackPawns[x].rank = parseInt(spaceRank)
 					pawn.dataset.file = spaceFile
 					pawn.dataset.rank = spaceRank
+					app.whiteTurn = true 
 				}
 			}
 		}
@@ -259,10 +256,10 @@ app.createBlackPawns(8)
 
 let board = document.getElementById('game_arena')
 board.addEventListener('click', (event) => {
-       if (event.target.classList.contains('white_pawn')){
+       if (event.target.classList.contains('white_pawn') && app.whiteTurn === true){
        		console.log(event.target)
        		app.selectWhitePawn(event.target.dataset.file, event.target.dataset.rank)
-       } else if (event.target.classList.contains('black_pawn')){
+       } else if (event.target.classList.contains('black_pawn') && app.whiteTurn === false){
        		app.selectBlackPawn(event.target.dataset.file, event.target.dataset.rank)
        } else if (event.target.classList.contains('available_space')){
        		app.movePawn(event.target.dataset.file, event.target.dataset.rank)
