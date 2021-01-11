@@ -89,11 +89,11 @@ const app = {
 				if (selectedPiece.classList.length === 2) {
 					selectedPiece.classList.remove('selected_piece')			
 					app.highlightWhiteMoves(selectedPiece)
-					app.checkAttack(selectedPiece)
+					app.checkWhiteAttack(selectedPiece)
 				} else {
 					selectedPiece.classList.add('selected_piece')
 					app.highlightWhiteMoves(selectedPiece)
-					app.checkAttack(selectedPiece)
+					app.checkWhiteAttack(selectedPiece)
 				}
 			}
 		}
@@ -105,17 +105,18 @@ const app = {
 				let selectedPiece = document.querySelector(`[data-file='${app.blackPawns[x].file}'][data-rank='${app.blackPawns[x].rank}'] .black_pawn`)
 				if (selectedPiece.classList.length === 2) {
 					selectedPiece.classList.remove('selected_piece')
-					app.highlightBlackMoves(selectedPiece)			
+					app.highlightBlackMoves(selectedPiece)
+					app.checkBlackAttack(selectedPiece)
 				} else {
 					selectedPiece.classList.add('selected_piece')
 					app.highlightBlackMoves(selectedPiece)
-					// app.checkAttack(selectedPiece)
+					app.checkBlackAttack(selectedPiece)
 				}
 			}
 		}
 	},
 
-	checkAttack: (selectedPiece) => {
+	checkWhiteAttack: (selectedPiece) => {
 		console.log('here is the selected piece in the check attack function', selectedPiece)
 		for ( x = 0; x < app.board.length; x ++ ) { 
 			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
@@ -132,6 +133,35 @@ const app = {
 					}
 				}
 				if (attackingCheckLeft.childNodes.length >= 1 && attackingCheckLeft.childNodes[0].classList.contains('black_pawn')) {
+					if (attackingCheckLeft.classList.length  > 2) {
+						attackingCheckLeft.classList.remove('available_space')
+					} else {
+						attackingCheckLeft.classList.add('available_space')
+					}
+				} else {
+					return
+				}
+		    }
+		}
+	},
+
+	checkBlackAttack: (selectedPiece) => {
+		console.log('here is the selected piece in the check attack function', selectedPiece)
+		for ( x = 0; x < app.board.length; x ++ ) { 
+			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
+				let attackingCheckRight = document.querySelector(`[data-file='${app.board[x].file - (-1)}'][data-rank='${app.board[x].rank + 1}']`)
+				let attackingCheckLeft = document.querySelector(`[data-file='${app.board[x].file - 1 }'][data-rank='${app.board[x].rank + 1}']`)
+				console.log('here is the attacking check after the for loop', attackingCheckLeft, attackingCheckRight)
+				console.log(attackingCheckRight.classList.length)
+				console.log(attackingCheckLeft.classList.length)
+				if (attackingCheckRight.childNodes.length >= 1 && attackingCheckRight.childNodes[0].classList.contains('white_pawn')){
+					if (attackingCheckRight.classList.length > 2){
+						attackingCheckRight.classList.remove('available_space')
+					} else {
+						attackingCheckRight.classList.add('available_space')
+					}
+				}
+				if (attackingCheckLeft.childNodes.length >= 1 && attackingCheckLeft.childNodes[0].classList.contains('white_pawn')) {
 					if (attackingCheckLeft.classList.length  > 2) {
 						attackingCheckLeft.classList.remove('available_space')
 					} else {
