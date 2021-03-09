@@ -120,28 +120,50 @@ const app = {
 		console.log('here is the selected piece in the check attack function', selectedPiece)
 		for ( x = 0; x < app.board.length; x ++ ) { 
 			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
-				let attackingCheckRight = document.querySelector(`[data-file='${app.board[x].file - (-1)}'][data-rank='${app.board[x].rank - 1}']`)
-				let attackingCheckLeft = document.querySelector(`[data-file='${app.board[x].file - 1 }'][data-rank='${app.board[x].rank - 1}']`)
-				console.log('here is the attacking check after the for loop', attackingCheckLeft, attackingCheckRight)
-				console.log(attackingCheckRight.classList.length)
-				console.log(attackingCheckLeft.classList.length)
-				if (attackingCheckRight.childNodes.length >= 1 && attackingCheckRight.childNodes[0].classList.contains('black_pawn')){
+				console.log(selectedPiece.dataset)
+				if (selectedPiece.dataset.file !== '0' && selectedPiece.dataset.file !== '7'){
+					console.log(' you have selected a middle peice')
+					let attackingCheckRight = document.querySelector(`[data-file='${app.board[x].file - (-1)}'][data-rank='${app.board[x].rank - 1}']`)
+					let attackingCheckLeft = document.querySelector(`[data-file='${app.board[x].file - 1 }'][data-rank='${app.board[x].rank - 1}']`)
+					if (attackingCheckRight.childNodes.length >= 1 && attackingCheckRight.childNodes[0].classList.contains('black_pawn')){
 					if (attackingCheckRight.classList.length > 2){
 						attackingCheckRight.classList.remove('available_space')
 					} else {
 						attackingCheckRight.classList.add('available_space')
+						}
 					}
+					if (attackingCheckLeft.childNodes.length >= 1 && attackingCheckLeft.childNodes[0].classList.contains('black_pawn')) {
+						if (attackingCheckLeft.classList.length  > 2) {
+							attackingCheckLeft.classList.remove('available_space')
+						} else {
+							attackingCheckLeft.classList.add('available_space')
+						}
+					} 
 				}
-				if (attackingCheckLeft.childNodes.length >= 1 && attackingCheckLeft.childNodes[0].classList.contains('black_pawn')) {
-					if (attackingCheckLeft.classList.length  > 2) {
-						attackingCheckLeft.classList.remove('available_space')
+				if (selectedPiece.dataset.file === '0'){
+					console.log('this is a left edge white peice')
+					let attackingCheckRight = document.querySelector(`[data-file='${app.board[x].file - (-1)}'][data-rank='${app.board[x].rank - 1}']`)
+					if (attackingCheckRight.childNodes.length >= 1 && attackingCheckRight.childNodes[0].classList.contains('black_pawn')){
+					if (attackingCheckRight.classList.length > 2){
+						attackingCheckRight.classList.remove('available_space')
 					} else {
-						attackingCheckLeft.classList.add('available_space')
+						attackingCheckRight.classList.add('available_space')
+						}
 					}
-				} else {
-					return
+				} else if (selectedPiece.dataset.file === '7') {
+					console.log('this is a white piece on the right edge')
+					let attackingCheckLeft = document.querySelector(`[data-file='${app.board[x].file - 1 }'][data-rank='${app.board[x].rank - 1}']`)
+					if (attackingCheckLeft.childNodes.length >= 1 && attackingCheckLeft.childNodes[0].classList.contains('black_pawn')) {
+						if (attackingCheckLeft.classList.length  > 2) {
+							attackingCheckLeft.classList.remove('available_space')
+						} else {
+							attackingCheckLeft.classList.add('available_space')
+						}
+					} else  {
+						return
+					}
 				}
-		    }
+			}
 		}
 	},
 
@@ -151,9 +173,6 @@ const app = {
 			if (app.board[x].rank == selectedPiece.dataset.rank && app.board[x].file == selectedPiece.dataset.file){
 				let attackingCheckRight = document.querySelector(`[data-file='${app.board[x].file - (-1)}'][data-rank='${app.board[x].rank + 1}']`)
 				let attackingCheckLeft = document.querySelector(`[data-file='${app.board[x].file - 1 }'][data-rank='${app.board[x].rank + 1}']`)
-				console.log('here is the attacking check after the for loop', attackingCheckLeft, attackingCheckRight)
-				console.log(attackingCheckRight.classList.length)
-				console.log(attackingCheckLeft.classList.length)
 				if (attackingCheckRight.childNodes.length >= 1 && attackingCheckRight.childNodes[0].classList.contains('white_pawn')){
 					if (attackingCheckRight.classList.length > 2){
 						attackingCheckRight.classList.remove('available_space')
