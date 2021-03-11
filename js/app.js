@@ -340,11 +340,18 @@ const app = {
 					let deadPawn = app.blackPawns[x]
 					console.log(app.blackPawns.indexOf(deadPawn));
 					let arrayIndex = app.blackPawns.indexOf(deadPawn)
-					console.log(app.blackPawns)
 					app.blackPawns.splice(arrayIndex, 1)
-					console.log(app.blackPawns)
 					app.capturedPawns.push(deadPawn)
-					console.log(app.capturedPawns)
+				}
+			}
+		} else if (pawn.classList.value === 'white_pawn'){
+			for ( x = 0 ; x < app.whitePawns.length; x ++) {
+				if ( app.whitePawns[x].file == pawn.dataset.file && app.whitePawns[x].rank == pawn.dataset.rank){
+					let deadPawn = app.whitePawns[x]
+					console.log(app.whitePawns.indexOf(deadPawn));
+					let arrayIndex = app.whitePawns.indexOf(deadPawn)
+					app.whitePawns.splice(arrayIndex, 1)
+					app.capturedPawns.push(deadPawn)
 				}
 			}
 		}
