@@ -208,9 +208,7 @@ const app = {
 				}
 			}
 		}
-	},
-
-					
+	},				
 
 	highlightWhiteMoves: (selectedPiece) => {
 		for ( x = 0; x < app.board.length; x++){
@@ -296,6 +294,11 @@ const app = {
 				let newPawnSpace = document.querySelector(`[data-file='${app.board[x].file}'][data-rank='${app.board[x].rank}']`)
 				newPawnSpace.appendChild(pawn)
 				pawn.classList.remove('selected_piece')
+				if ( newPawnSpace.childNodes.length ===2) {
+					let deadPawn = newPawnSpace.childNodes[0]
+					deadPawn.remove()
+					app.sendPawnToGraveyard(deadPawn)
+				}
 				let availableSpaces = document.querySelectorAll('.available_space')
 				availableSpaces.forEach((space)=> {
 					space.classList.remove('available_space')
@@ -324,6 +327,24 @@ const app = {
 					pawn.dataset.file = spaceFile
 					pawn.dataset.rank = spaceRank
 					app.whiteTurn = true 
+				}
+			}
+		}
+	},
+
+	sendPawnToGraveyard: (pawn) => {
+		console.log(pawn.classList)
+		if (pawn.classList.value === 'black_pawn'){
+			for ( x = 0 ; x < app.blackPawns.length; x ++) {
+				if ( app.blackPawns[x].file == pawn.dataset.file && app.blackPawns[x].rank == pawn.dataset.rank){
+					let deadPawn = app.blackPawns[x]
+					console.log(app.blackPawns.indexOf(deadPawn));
+					let arrayIndex = app.blackPawns.indexOf(deadPawn)
+					console.log(app.blackPawns)
+					app.blackPawns.splice(arrayIndex, 1)
+					console.log(app.blackPawns)
+					app.capturedPawns.push(deadPawn)
+					console.log(app.capturedPawns)
 				}
 			}
 		}
